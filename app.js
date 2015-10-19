@@ -47,6 +47,29 @@ var showQuestion = function(question) {
 	return result;
 };
 
+//-------------------------------
+var showTopAnswers = function(TopAnswer) {
+	console.log(TopAnswer);
+	// clone our result template code
+	var result = $('.templates .question').clone();
+	
+	// Set the answer properties in result
+	var answerElem = result.find('.question-text a');
+	answerElem.attr('href', TopAnswer.link);
+	answerElem.text(TopAnswer.title);
+
+	// set the #views for answer property in result
+	var viewed = result.find('.viewed');
+	viewed.text(TopAnswer.view_count);
+
+	// set some properties related to asker
+	var asker = result.find('.asker');
+	asker.html('<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + TopAnswer.user.user_id + ' >' + TopAnswer.user.display_name + '</a>' + '</p>' + '<p>Reputation: ' + TopAnswer.user.reputation + '</p>'
+	);
+
+	return result;
+};
+
 
 // this function takes the results object from StackOverflow
 // and creates info about search results to be appended to DOM
@@ -94,6 +117,7 @@ var getUnanswered = function(tags) {
 	});
 };
 
+
 var getInspiration = function(tags) {
 	
 	// the parameters we need to pass in our request to StackOverflow's API
@@ -103,20 +127,21 @@ var getInspiration = function(tags) {
 					sort: 'creation'};
 	
 	var result = $.ajax({
-		url: "http://api.stackexchange.com/2.2/tags/{tag2/top-answerers",
-		data: request,
+		url: "http://api.stackexchange.com/2.2/tags/" + tags + "/top-answerers/all_time?site=stackoverflow",
+// 		data: request,
 		dataType: "jsonp",
 		type: "GET",
 		})
 	
 	.done(function(result){
+		console.log(result);
 		var searchResults = showSearchResults(request.tagged, result.items.length);
 
 		$('.search-results').html(searchResults);
 
 		$.each(result.items, function(i, item) {
-			var question = showQuestion(item);
-			$('.results').append(question);
+			var answerer = showTopAnswers(item);
+			$('.results').append(answerer);
 		});
 	})
 	.fail(function(jqXHR, error, errorThrown){
