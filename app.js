@@ -11,7 +11,7 @@ $(document).ready( function() {
 		// zero out results if previous search has run
 		$('.results').html('');
 		// get the value of the tags the user submitted
-		var tags = $(this).find("input[name='tags']").val();
+		var tags = $(this).find("input[name='answerers']").val();
 		getInspiration(tags);
 		var tagQuery = $('.inspiration-getter').val();
 		console.log(tagQuery);
@@ -103,7 +103,7 @@ var getInspiration = function(tags) {
 					sort: 'creation'};
 	
 	var result = $.ajax({
-		url: "http://api.stackexchange.com/2.2/tags/{tag}/top-answerers",
+		url: "http://api.stackexchange.com/2.2/tags/{tag2/top-answerers",
 		data: request,
 		dataType: "jsonp",
 		type: "GET",
