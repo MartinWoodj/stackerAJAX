@@ -51,7 +51,7 @@ var showQuestion = function(question) {
 var showTopAnswers = function(TopAnswer) {
 	console.log(TopAnswer);
 	// clone our result template code
-	var result = $('.templates .question').clone();
+	var result = $('.templates .answer').clone();
 	
 	// Set the answer properties in result
 	var answerElem = result.find('.question-text a');
@@ -64,7 +64,7 @@ var showTopAnswers = function(TopAnswer) {
 
 	// set some properties related to asker
 	var asker = result.find('.asker');
-	asker.html('<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + TopAnswer.user.user_id + ' >' + TopAnswer.user.display_name + '</a>' + '</p>' + '<p>Reputation: ' + TopAnswer.user.reputation + '</p>'
+	asker.html('<img src="' + TopAnswer.user.profile_image +'">' + '<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + TopAnswer.user.user_id + ' >' + TopAnswer.user.display_name + '</a>' + '</p>' + '<p>Reputation: ' + TopAnswer.user.reputation + '</p>'
 	);
 
 	return result;
